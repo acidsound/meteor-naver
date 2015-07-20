@@ -7,13 +7,14 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
+  api.versionsFrom('1.0');
   api.use('oauth2', ['client', 'server']);
   api.use('oauth', ['client', 'server']);
   api.use('http', ['server']);
   api.use('templating', 'client');
   api.use('underscore', 'client');
   api.use('random', 'client');
-  api.use('peerlibrary:xml2js');
+  api.use('peerlibrary:xml2js@0.4.4_3');
   api.use('service-configuration', ['client', 'server']);
 
   api.export('Naver');
