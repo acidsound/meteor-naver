@@ -1,0 +1,16 @@
+<template name="configureLoginServiceDialogForNaver">
+    <p>
+        First, you'll need to get a Naver Client ID. Follow these steps:
+    </p>
+    <ol>
+        <li>
+            Visit <a href="https://nid.naver.com/devcenter/register.nhn" target="blank">https://nid.naver.com/devcenter/register.nhn</a>
+        </li>
+        <li>
+            Set Service URL to: <span class="url">{{siteUrl}}</span>
+        </li>
+        <li>
+            Set Authorization callback URL to: <span class="url">{{siteUrl}}_oauth/naver</span>
+        </li>
+    </ol>
+</template>

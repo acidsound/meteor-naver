@@ -1,0 +1,38 @@
+Naver = {};
+// Request Naver credentials for the user
+// @param options {optional}
+// @param credentialRequestCompleteCallback {Function} Callback function to call on
+//   completion. Takes one argument, credentialToken on success, or Error on
+//   error.
+Naver.requestCredential = function (options, credentialRequestCompleteCallback) {
+    // support both (options, callback) and (callback).
+    if (!credentialRequestCompleteCallback && typeof options === 'function') {
+        credentialRequestCompleteCallback = options;
+        options = {};
+    }
+
+    var config = ServiceConfiguration.configurations.findOne({service: 'naver'});
+    if (!config) {
+        credentialRequestCompleteCallback && credentialRequestCompleteCallback(
+            new ServiceConfiguration.ConfigError());
+        return;
+    }
+
+    var credentialToken = Random.secret();
+
+    var loginStyle = OAuth._loginStyle('naver', config, options);
+
+    var loginUrl =
+        'https://nid.naver.com/oauth2.0/authorize' +
+        '?client_id=' + config.clientId +
+        '&response_type=code' +
+        '&redirect_uri=' + encodeURIComponent(OAuth._redirectUri('naver', config)) +
+        '&state=' + encodeURIComponent(OAuth._stateParam(loginStyle, credentialToken));
+    OAuth.launchLogin({
+        loginService: "naver",
+        loginStyle: loginStyle,
+        loginUrl: loginUrl,
+        credentialRequestCompleteCallback: credentialRequestCompleteCallback,
+        credentialToken: credentialToken
+    });
+};
